@@ -1,0 +1,8 @@
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/SafeMailApplication.java
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/config/WebConfig.java
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/controller/AuthController.java
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/controller/HealthController.java
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/controller/UserController.java
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/model/UserRecord.java
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/service/UserService.java
+/Users/admin/Documents/WCE III/SIH 2026/project/backend-java/src/main/java/com/example/safemail/util/JwtUtil.java

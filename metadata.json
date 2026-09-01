@@ -1,0 +1,6 @@
+{
+  "name": "TraceMail AI",
+  "description": "SOC Command Center for explainable email threat analysis, forensic timeline, and security intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

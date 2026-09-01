@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-headline: 'Chivo', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: #090B10;
+    color: #e2e2e9;
+  }
+}
+
+.font-display, .font-headline {
+  font-family: 'Chivo', sans-serif;
+}
+
+.font-mono-data {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.hud-border {
+  border: 1px solid #202B3C;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hud-border:hover {
+  border-color: #00daf3;
+  box-shadow: 0 0 12px rgba(0, 218, 243, 0.15);
+}
+
+.hud-card {
+  background-color: rgba(11, 15, 22, 0.85);
+  border: 1px solid #202B3C;
+  backdrop-filter: blur(8px);
+}
+
+.dashed-dropzone {
+  border: 1px dashed #202B3C;
+  transition: all 0.2s ease;
+}
+
+.dashed-dropzone:hover {
+  border-color: #00daf3;
+  background-color: rgba(0, 218, 243, 0.04);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090B10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #202B3C;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00daf3;
+}
+
+/* Hide scrollbar for touch carousels */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
