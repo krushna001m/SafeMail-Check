@@ -93,7 +93,7 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({
               </div>
               <div>
                 <h1 className="font-headline text-lg font-bold text-[#00daf3] m-0 leading-tight">
-                  SafeMail Check
+                  TraceMail
                 </h1>
                 <span className="font-mono-data text-[10px] text-[#8A94A6] uppercase tracking-wider block">
                   Email Safety Center

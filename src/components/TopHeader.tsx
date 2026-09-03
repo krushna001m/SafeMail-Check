@@ -109,7 +109,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               <Shield className="w-3.5 h-3.5 fill-current" />
             </div>
             <span className="font-headline text-sm font-bold text-[#00daf3] tracking-wide">
-              SafeMail Check
+              TraceMail
             </span>
           </div>
         </div>
