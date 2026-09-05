@@ -12,7 +12,12 @@ export interface PlatformStats {
 }
 
 const AUTH_TOKEN_KEY = 'tracemail_soc_auth_token';
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 let sessionExpiredListener: (() => void) | null = null;
+
+function apiUrl(path: string): string {
+  return `${API_BASE_URL}${path}`;
+}
 
 export function setSessionExpiredListener(listener: (() => void) | null) {
   sessionExpiredListener = listener;
@@ -77,7 +82,7 @@ async function handleApiResponse(res: Response): Promise<any> {
 // =====================================
 
 export async function loginUser(email: string, password: string): Promise<{ user: User; token: string; message: string }> {
-  const res = await fetch('/api/auth/login', {
+  const res = await fetch(apiUrl('/api/auth/login'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -96,7 +101,7 @@ export async function registerUser(
   confirmPassword?: string,
   organization?: string
 ): Promise<{ user: User; token: string; message: string }> {
-  const res = await fetch('/api/auth/register', {
+  const res = await fetch(apiUrl('/api/auth/register'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, password, confirmPassword, organization }),
@@ -109,14 +114,14 @@ export async function registerUser(
 }
 
 export async function getCurrentUserProfile(): Promise<User> {
-  const res = await fetch('/api/users/me', {
+  const res = await fetch(apiUrl('/api/users/me'), {
     headers: getAuthHeaders(),
   });
   return await handleApiResponse(res);
 }
 
 export async function updateUserProfile(name: string, organization?: string): Promise<{ user: User; message: string }> {
-  const res = await fetch('/api/users/profile', {
+  const res = await fetch(apiUrl('/api/users/profile'), {
     method: 'PUT',
     headers: getAuthHeaders(),
     body: JSON.stringify({ name, organization }),
@@ -129,7 +134,7 @@ export async function changeUserPassword(
   newPassword: string,
   confirmNewPassword?: string
 ): Promise<{ message: string }> {
-  const res = await fetch('/api/auth/change-password', {
+  const res = await fetch(apiUrl('/api/auth/change-password'), {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify({ currentPassword, newPassword, confirmNewPassword }),
@@ -138,7 +143,7 @@ export async function changeUserPassword(
 }
 
 export async function requestPasswordReset(email: string): Promise<{ message: string; resetTokenUrl?: string }> {
-  const res = await fetch('/api/auth/forgot-password', {
+  const res = await fetch(apiUrl('/api/auth/forgot-password'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email }),
@@ -151,7 +156,7 @@ export async function resetPassword(
   newPassword: string,
   confirmPassword?: string
 ): Promise<{ message: string }> {
-  const res = await fetch('/api/auth/reset-password', {
+  const res = await fetch(apiUrl('/api/auth/reset-password'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token, newPassword, confirmPassword }),
@@ -540,7 +545,7 @@ export async function analyzeEmailArtifact(
   fileName: string = 'email_artifact.eml'
 ): Promise<InvestigationData> {
   try {
-    const res = await fetch('/api/analyze-email', {
+    const res = await fetch(apiUrl('/api/analyze-email'), {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify({ rawEmail, fileName }),
@@ -561,7 +566,7 @@ export async function analyzeEmailArtifact(
 // Fetch Real Platform Stats
 export async function fetchPlatformStats(): Promise<PlatformStats> {
   try {
-    const res = await fetch('/api/stats', {
+    const res = await fetch(apiUrl('/api/stats'), {
       headers: getAuthHeaders(),
     });
     if (res.ok) {
@@ -585,7 +590,7 @@ export async function fetchPlatformStats(): Promise<PlatformStats> {
 // Fetch Investigations History
 export async function fetchInvestigationsHistory(): Promise<InvestigationData[]> {
   try {
-    const res = await fetch('/api/history', {
+    const res = await fetch(apiUrl('/api/history'), {
       headers: getAuthHeaders(),
     });
     if (res.ok) {
@@ -604,7 +609,7 @@ export const fetchInvestigationHistory = fetchInvestigationsHistory;
 // Delete Investigation by ID
 export async function deleteInvestigation(id: string): Promise<boolean> {
   try {
-    const res = await fetch(`/api/investigations/${encodeURIComponent(id)}`, {
+    const res = await fetch(apiUrl(`/api/investigations/${encodeURIComponent(id)}`), {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -623,7 +628,7 @@ export async function sendAiChatMessage(
   mode: 'simple' | 'technical' = 'technical'
 ): Promise<AiChatResponse> {
   try {
-    const res = await fetch('/api/ai/chat', {
+    const res = await fetch(apiUrl('/api/ai/chat'), {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify({
@@ -669,7 +674,7 @@ export async function sendAiChatMessage(
 
 export async function fetchAiConversation(analysisId: string): Promise<AiChatMessage[]> {
   try {
-    const res = await fetch(`/api/ai/conversations/${encodeURIComponent(analysisId)}`);
+    const res = await fetch(apiUrl(`/api/ai/conversations/${encodeURIComponent(analysisId)}`));
     if (res.ok) {
       const data = await res.json();
       return data.messages || [];
@@ -682,7 +687,7 @@ export async function fetchAiConversation(analysisId: string): Promise<AiChatMes
 
 export async function clearAiConversation(analysisId: string): Promise<boolean> {
   try {
-    const res = await fetch(`/api/ai/conversations/${encodeURIComponent(analysisId)}`, {
+    const res = await fetch(apiUrl(`/api/ai/conversations/${encodeURIComponent(analysisId)}`), {
       method: 'DELETE',
     });
     return res.ok;
